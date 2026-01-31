@@ -3,11 +3,13 @@
 #include <conio.h>
 using namespace std;
 
+//constant value that don't change anything happened except play
 const float min_pos = -10;
 const float max_pos = 10;
 const float speed = 1;
-bool mulai = true;
+bool play = true;
 
+//input handler
 void input(char& key, float& x, float& z) {
     cout << "Masukin input WASD" << endl << "Input : ";
     key = getch();
@@ -21,7 +23,8 @@ void input(char& key, float& x, float& z) {
     }
 }
 
-void tabrakan(float& x, float& z){
+//collosion checker
+void collision(float& x, float& z){
     if (x < min_pos) {
         x = min_pos;
     }
@@ -36,11 +39,13 @@ void tabrakan(float& x, float& z){
     }
 }
 
+//trigger any logic
 void logic(float& x, float& z){
-    tabrakan(x, z);
+    collision(x, z);
 }
 
-void tampilan(float& x, float& z){
+//how the code will be display
+void display(float& x, float& z){
     for (float i = max_pos; i >= min_pos; i -= 1) {
         for (float j = min_pos; j <= max_pos; j += 1) {
             if (i == z && j == x) {
@@ -53,21 +58,25 @@ void tampilan(float& x, float& z){
     }
 }
 
+//how code will be display
 void render(char& key, float& x, float& z){
     system("cls");
-    cout << "Huruf yang kamu tekan : " << key << endl;
-    cout << "Posisi X : " << x << endl;
-    cout << "Posisi Z : " << z << endl;
-    tampilan(x, z);
+    cout << "HKey that you click" << key << endl;
+    cout << "X : " << x << endl;
+    cout << "Z : " << z << endl;
+    display(x, z);
 }
 
+//main code
 int main() {
     char key;
     float x = 0, z = 0;
 
-    while (mulai) {
+    //three main loop
+    while (play) {
     input(key, x, z);
     logic(x, z);
     render(key, x, z);
     }
+
 }
